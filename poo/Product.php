@@ -1,10 +1,30 @@
 <?php
 require_once 'InvalidRateException.php';
 
-class Product
+abstract class Product
 {
-  private string $name;
-  private float $price;
+  protected string $name;
+  protected float $price;
+
+  /**
+   * Constructs a new Product instance
+   *
+   * @param string $name
+   * @param float $price
+   * @throws InvalidArgumentException If price is negative
+   */
+  public function __construct(
+    string $name,
+    float $price
+  ) {
+    $this->name = $name;
+    if ($price <= 0) {
+      throw new InvalidArgumentException("Price cannot be negative");
+    }
+    $this->price = $price;
+  }
+
+  abstract public function displayInfos(): void;
 
   /**
    * Get full tax price
